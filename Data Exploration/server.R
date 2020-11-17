@@ -20,7 +20,7 @@ bike$Workingday <- ifelse(bike$workingday==1,"Yes","No")
 bike <- bike %>% select(-c("instant","dteday"))
 
 
-###data exploriation
+###data exploration
 shinyServer(function(input, output, session) {
   
     getData1 <- reactive({

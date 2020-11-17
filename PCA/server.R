@@ -14,31 +14,25 @@ library(graphics)
 # Read the Data
 bike <-read.csv("day.csv",header=T)
 
-bike$weather <-ifelse(bike$weathersit==1,"Few Clouds",ifelse(bike$weathersit==2,"Mist","Light Snow")) 
-bike$Season <- ifelse(bike$season==1,"Spring",ifelse(bike$season==2,"Summer",ifelse(bike$season==3,"Fall","Winter")))
-bike$Workingday <- ifelse(bike$workingday==1,"Yes","No")
-bike %>% select(-c("instant","dteday"))
+bike <- bike %>% select(-c("instant","dteday"))
 
 
 # Define server logic required to draw a histogram
 shinyServer(function(input, output,session){
 
   newVar2 <-reactive({
-    bike[c(input$var1,input$var2,input$var3,input$var4)] 
+    bike[c(input$var1,input$var2)] 
   })
     
   output$tab3_result1 <- renderPrint({
-    x <- newVar2()
-    pca <- princomp(x)
-    pca$scores
+     prcomp(bike,center=TRUE, scale=TRUE)
   })
   
   output$screeplot <- renderPlot({
-    x <- newVar2()
-    pca <- princomp(x)
+   
+    pca <-prcomp(bike,center=TRUE, scale=TRUE)
     screeplot(pca, type="lines")
   })
-  
   
     output$biplot <- renderPlot(
       {
