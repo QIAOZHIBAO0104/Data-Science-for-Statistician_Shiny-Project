@@ -14,10 +14,6 @@ library(tidyverse)
 # Read the Data
 bike <-read.csv("day.csv",header=T)
 
-bike$weather <-ifelse(bike$weathersit==1,"Few Clouds",ifelse(bike$weathersit==2,"Mist","Light Snow")) 
-bike$Season <- ifelse(bike$season==1,"Spring",ifelse(bike$season==2,"Summer",ifelse(bike$season==3,"Fall","Winter")))
-bike$Workingday <- ifelse(bike$workingday==1,"Yes","No")
-bike <- select(bike,-c("instant","dteday"))
 
 # UI Part
 shinyUI(fluidPage(
@@ -31,21 +27,21 @@ shinyUI(fluidPage(
         sidebarPanel(
             h3("Select the Season:"),
             selectizeInput("season", "Season", 
-                           choices = c("Spring"="Spring",
-                                       "Summer"="Summer",
-                                       "Fall"="Fall",
-                                       "Winter"="Winter")
+                           choices = c("Spring"="1",
+                                       "Summer"="2",
+                                       "Fall"="3",
+                                       "Winter"="4")
             ),
             
             sliderInput("size", "Size of Points on Graph",
                         min = 1, max = 10, value = 5, step = 1, animate = TRUE),
             
-            checkboxInput("weather", h4("Color Code Weather Status", style = "color:blue;")),
+            checkboxInput("weathersit", h4("Color Code Weather Status", style = "color:blue;")),
             
             # Use a conditionalPanel to create box that required
             
             conditionalPanel(
-              condition = "input.weather",
+              condition = "input.weathersit",
               checkboxInput("workingday","Also change symbol based on Workingday?")
             )
         ),

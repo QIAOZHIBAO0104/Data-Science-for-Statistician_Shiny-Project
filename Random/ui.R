@@ -23,7 +23,7 @@ tabItem(tabName="RFmodeling",
           sidebarPanel(
             numericInput("Ntree","Select the number of trees to include in the model:", min=1, value=1),
             h4("Select Variable Values for Prediction"),
-            selectInput("season", "Season", choices=(c("Winter"="1","Spring"="2","Summer"="3","Fall"="4"))),
+            selectInput("seas", "Season", choices=(c("Winter"="1","Spring"="2","Summer"="3","Fall"="4"))),
             selectInput("yr", "Year", choices=c("2011"="0", "2012"="1")),
             selectInput("mnth", "Month", choices=c("1","2","3","4","5","6","7","8","9","10","11","12")),
             selectInput("holiday","Holiday", choices=c("Yes"="1", "No"="0")),

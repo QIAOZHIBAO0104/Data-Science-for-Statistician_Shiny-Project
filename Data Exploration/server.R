@@ -14,17 +14,13 @@ library(tidyverse)
 # Read the Data
 bike <-read.csv("day.csv",header=T)
 
-bike$weather <-ifelse(bike$weathersit==1,"Few Clouds",ifelse(bike$weathersit==2,"Mist","Light Snow")) 
-bike$Season <- ifelse(bike$season==1,"Spring",ifelse(bike$season==2,"Summer",ifelse(bike$season==3,"Fall","Winter")))
-bike$Workingday <- ifelse(bike$workingday==1,"Yes","No")
-bike <- bike %>% select(-c("instant","dteday"))
 
 
 ###data exploration
 shinyServer(function(input, output, session) {
   
     getData1 <- reactive({
-        newData1 <- bike %>% filter(Season == input$season)
+        newData1 <- bike %>% filter(season == input$season)
     })
     
     #create plot
@@ -35,11 +31,11 @@ shinyServer(function(input, output, session) {
         #create plot
         g <- ggplot(newData1, aes(x = registered, y = cnt))
         
-        if(input$weather){
+        if(input$weathersit){
             if(input$workingday){
-                g + geom_point(size = input$size, aes(col = weather,alpha=Workingday))
+                g + geom_point(size = input$size, aes(col = weathersit,alpha=workingday))
             }
-            else{g + geom_point(size = input$size,aes(col = weather))
+            else{g + geom_point(size = input$size,aes(col = weathersit))
             }
         }  
         else{g + geom_point(size = input$size)}
@@ -57,5 +53,14 @@ shinyServer(function(input, output, session) {
     output$table <- renderTable({
         getData1()
     })
+   
+     ########################################## PCA ###############################################
+    
+    
+    
+    
+    
+    
+    
     
 })

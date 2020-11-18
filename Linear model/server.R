@@ -15,9 +15,8 @@ library(graphics)
 # Read the Data
 bike <-read.csv("day.csv",header=T)
 
-bike$weather <-ifelse(bike$weathersit==1,"Few Clouds",ifelse(bike$weathersit==2,"Mist","Light Snow")) 
-bike$Season <- ifelse(bike$season==1,"Spring",ifelse(bike$season==2,"Summer",ifelse(bike$season==3,"Fall","Winter")))
-bike$Workingday <- ifelse(bike$workingday==1,"Yes","No")
+
+
 bike <- bike %>% select(-c("instant","dteday"))
 train <- sample(1:nrow(bike), size=nrow(bike)*0.8)
 test <- (1:nrow(bike))[-train]

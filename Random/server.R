@@ -44,7 +44,7 @@ shinyServer(function(input, output) {
   
   bikeReact3 <- reactive({
     newData3 <- data.frame(
-      season=input$season,
+      season=input$seas,
       yr=input$yr,
       mnth=input$mnth,
       holiday=input$holiday,
